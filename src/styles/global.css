@@ -38,6 +38,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.knowledge-orbit {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
 body,
 button,
 input {
@@ -178,6 +186,8 @@ button {
 }
 
 .site-main {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   margin-left: var(--sidebar-width);
 }
@@ -190,7 +200,48 @@ button {
 }
 
 .home-shell {
+  position: relative;
   padding: 90px 0 68px;
+}
+
+.home-hero > div,
+.status-panel,
+.topics-section,
+.home-columns,
+.projects-preview {
+  animation: rise-in 620ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.home-hero > div {
+  animation-delay: 40ms;
+}
+
+.status-panel {
+  animation-delay: 140ms;
+}
+
+.topics-section {
+  animation-delay: 230ms;
+}
+
+.home-columns {
+  animation-delay: 310ms;
+}
+
+.projects-preview {
+  animation-delay: 390ms;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .home-hero {
@@ -279,13 +330,32 @@ button {
 }
 
 .topic-link {
+  position: relative;
   display: grid;
   justify-items: center;
   gap: 14px;
   min-height: 142px;
   padding: 8px 28px 26px;
   border-right: 1px solid var(--line);
-  transition: background 160ms ease;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.topic-link::after {
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  width: min(112px, 54%);
+  height: 1px;
+  background: var(--accent);
+  content: "";
+  opacity: 0;
+  transform: translateX(-50%) scaleX(0.18);
+  transform-origin: left center;
+  transition:
+    opacity 180ms ease,
+    transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .topic-link:last-child {
@@ -294,12 +364,23 @@ button {
 
 .topic-link:hover {
   background: rgba(49, 108, 67, 0.035);
+  transform: translateY(-3px);
+}
+
+.topic-link:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scaleX(1);
 }
 
 .topic-link__index {
   color: var(--accent);
   font-family: Georgia, serif;
   font-size: 26px;
+  transition: transform 180ms ease;
+}
+
+.topic-link:hover .topic-link__index {
+  transform: translateY(-2px);
 }
 
 .topic-link strong {
@@ -343,11 +424,14 @@ button {
   align-items: center;
   min-height: 42px;
   border-bottom: 1px solid var(--line);
-  transition: color 150ms ease;
+  transition:
+    color 150ms ease,
+    background 150ms ease;
 }
 
 .update-row:hover {
   color: var(--accent);
+  background: rgba(49, 108, 67, 0.025);
 }
 
 .update-row time {
@@ -360,6 +444,11 @@ button {
   font-size: 14px;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: transform 180ms ease;
+}
+
+.update-row:hover span {
+  transform: translateX(4px);
 }
 
 .text-link {
@@ -423,6 +512,18 @@ button {
   height: 100%;
   border-radius: inherit;
   background: var(--accent);
+  animation: progress-grow 780ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transform-origin: left center;
+}
+
+@keyframes progress-grow {
+  from {
+    transform: scaleX(0.12);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .project-grid {
@@ -858,6 +959,7 @@ button {
   padding: 12vh 20px 20px;
   background: rgba(32, 39, 35, 0.42);
   backdrop-filter: blur(4px);
+  animation: overlay-in 150ms ease both;
 }
 
 .search-dialog {
@@ -867,6 +969,29 @@ button {
   border-radius: 8px;
   background: var(--surface);
   box-shadow: 0 24px 70px rgba(25, 33, 28, 0.17);
+  animation: dialog-in 190ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .search-dialog__input {
@@ -1007,6 +1132,10 @@ button {
     padding: 0 20px;
     border-bottom: 1px solid var(--line);
     background: rgba(247, 246, 241, 0.96);
+  }
+
+  .knowledge-orbit {
+    display: none;
   }
 
   .mobile-brand {
@@ -1253,5 +1382,27 @@ button {
 
   .secondary-button {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .knowledge-orbit {
+    display: none;
+  }
+
+  .topic-link:hover,
+  .topic-link:hover .topic-link__index,
+  .update-row:hover span,
+  .text-link:hover svg {
+    transform: none;
   }
 }

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { ArrowRight, BookOpen, CheckCircle, Circle, NotePencil } from "@phosphor-icons/react";
+import KnowledgeOrbit from "../components/KnowledgeOrbit.jsx";
 import Layout from "../layouts/Layout.astro";
 import { currentWork, projects, themes } from "../data/site";
 
@@ -16,6 +17,7 @@ const formatDate = (date: Date) =>
 ---
 
 <Layout>
+  <KnowledgeOrbit client:load />
   <div class="home-shell">
     <header class="home-hero">
       <div>
