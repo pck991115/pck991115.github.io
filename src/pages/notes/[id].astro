@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from "astro:content";
+import { ArrowLeft } from "@phosphor-icons/react";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const notes = await getCollection("notes");
+  return notes
+    .filter((note) => !note.data.draft)
+    .map((note) => ({
+      params: { id: note.id },
+      props: { note },
+    }));
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+const date = new Intl.DateTimeFormat("zh-CN", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+}).format(note.data.date);
+---
+
+<Layout title={`${note.data.title}｜庞成康`} description={note.data.description}>
+  <article class="article-shell" data-pagefind-body>
+    <a class="back-link" href="/notes/"><ArrowLeft size={17} /> 返回笔记</a>
+    <header class="article-header">
+      <div class="article-meta">
+        <span>{note.data.theme}</span>
+        <time datetime={note.data.date.toISOString()}>{date}</time>
+        <span>{note.data.readingTime}</span>
+      </div>
+      <h1 data-pagefind-meta="title">{note.data.title}</h1>
+      <p>{note.data.description}</p>
+      <div class="article-tags">
+        {note.data.tags.map((tag: string) => <span>#{tag}</span>)}
+      </div>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.npm-cache/
+.npmrc
+.DS_Store
+
+# 本地预览与视觉 QA 产物
+qa/*.png
+qa/*.html
+
+# 环境变量
+.env
+.env.*

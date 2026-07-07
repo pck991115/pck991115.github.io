@@ -1,0 +1,38 @@
+---
+import { DownloadSimple } from "@phosphor-icons/react";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="简历｜庞成康">
+  <div class="page-shell resume-page">
+    <header class="page-header resume-heading">
+      <div>
+        <p class="eyebrow">Resume</p>
+        <h1>简历</h1>
+        <p>这里保留公开的教育、工作与项目经历。</p>
+      </div>
+      <button class="secondary-button" type="button" onclick="window.print()">
+        <DownloadSimple size={18} /> 打印或保存 PDF
+      </button>
+    </header>
+
+    <section class="resume-section">
+      <h2>个人简介</h2>
+      <p>关注内容组织、产品体验与前端实现，擅长把复杂问题拆解成可执行的步骤。</p>
+    </section>
+    <section class="resume-section">
+      <h2>能力方向</h2>
+      <div class="resume-skills">
+        <span>内容架构</span><span>前端开发</span><span>数据可视化</span>
+        <span>项目复盘</span><span>知识管理</span><span>持续学习</span>
+      </div>
+    </section>
+    <section class="resume-section">
+      <h2>项目经历</h2>
+      <div class="resume-item">
+        <div><strong>个人知识主页</strong><time>2026 — 至今</time></div>
+        <p>完成需求梳理、视觉设计、内容建模与前端实现，建立长期可维护的个人内容系统。</p>
+      </div>
+    </section>
+  </div>
+</Layout>

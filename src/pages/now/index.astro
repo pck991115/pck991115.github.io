@@ -1,0 +1,35 @@
+---
+import { ArrowRight } from "@phosphor-icons/react";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="最近动态｜庞成康">
+  <div class="page-shell narrow-page">
+    <header class="page-header">
+      <p class="eyebrow">Now</p>
+      <h1>最近动态</h1>
+      <p>记录我正在学习、构建和思考的事情。最后更新于 2026 年 7 月。</p>
+    </header>
+
+    <div class="now-list">
+      <article>
+        <time>正在构建</time>
+        <h2>个人知识主页</h2>
+        <p>完善文章结构、主题筛选和静态搜索，让持续记录变得更轻松。</p>
+        <a class="text-link" href="/projects/">查看项目 <ArrowRight size={16} /></a>
+      </article>
+      <article>
+        <time>正在学习</time>
+        <h2>个人理财的基础框架</h2>
+        <p>从现金流、风险、资产配置和长期目标开始，建立自己的学习地图。</p>
+        <a class="text-link" href="/notes/?theme=理财学习">查看笔记 <ArrowRight size={16} /></a>
+      </article>
+      <article>
+        <time>正在整理</time>
+        <h2>项目复盘方法</h2>
+        <p>把经验从“做过”整理成“下次还能做得更好”。</p>
+        <a class="text-link" href="/notes/?theme=职业成长">查看笔记 <ArrowRight size={16} /></a>
+      </article>
+    </div>
+  </div>
+</Layout>

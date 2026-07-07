@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import Sidebar from "../components/Sidebar.jsx";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "庞成康的知识主页",
+  description = "记录问题、实践、复盘，也记录仍在生长的答案。",
+} = Astro.props;
+
+const notes = (await getCollection("notes"))
+  .filter((note) => !note.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const searchItems = notes.map((note) => ({
+  title: note.data.title,
+  description: note.data.description,
+  theme: note.data.theme,
+  tags: note.data.tags,
+  href: `/notes/${note.id}/`,
+}));
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f6f1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Sidebar
+      client:load
+      currentPath={Astro.url.pathname}
+      searchItems={searchItems}
+    />
+    <main class="site-main">
+      <slot />
+    </main>
+  </body>
+</html>
